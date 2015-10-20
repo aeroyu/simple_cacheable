@@ -28,6 +28,9 @@ module Cacheable
         "#{@@prefix_key}#{self.to_s}/#{param}"
       end
 
+      def cacheable_table_name
+        self.base_class.name.tableize.gsub("/", "_")
+      end
     end
 
     module InstanceKeys
