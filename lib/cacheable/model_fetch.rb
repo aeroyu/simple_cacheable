@@ -15,26 +15,26 @@ module Cacheable
     def write(key, value, options=nil)
       options ||= {}
 
-      coder = if !value.is_a?(Hash) && value.respond_to?(:to_a)
-        value.to_a.map {|obj| coder_from_record(obj) }
-      else
-        coder_from_record(value)
-      end
+      # coder = if !value.is_a?(Hash) && value.respond_to?(:to_a)
+      #   value.to_a.map {|obj| coder_from_record(obj) }
+      # else
+      #   coder_from_record(value)
+      # end
 
-      Rails.cache.write(key, coder, options)
-      coder
+      Rails.cache.write(key, value, options)
+      # coder
     end
 
     def read(key, options=nil)
       options ||= {}
       value = Rails.cache.read(key, options)
-      return nil if value.nil?
-
-      if !value.is_a?(Hash) && value.respond_to?(:to_a)
-        value.to_a.map { |obj| record_from_coder(obj) }
-      else
-        record_from_coder(value)
-      end
+      # return nil if value.nil?
+      #
+      # if !value.is_a?(Hash) && value.respond_to?(:to_a)
+      #   value.to_a.map { |obj| record_from_coder(obj) }
+      # else
+      #   record_from_coder(value)
+      # end
     end
 
     def coder_from_record(record)
