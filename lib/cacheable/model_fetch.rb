@@ -20,7 +20,9 @@ module Cacheable
       # else
       #   coder_from_record(value)
       # end
-
+      unless options[:expires_in]
+        options[:expires_in] = 3.weeks
+      end
       Rails.cache.write(key, value, options)
       # coder
     end
@@ -41,7 +43,7 @@ module Cacheable
       return if record.nil?
       return record unless record.is_a?(ActiveRecord::Base)
 
-      coder = { :class => record.class }
+      coder = {:class => record.class}
       record.encode_with(coder)
       coder
     end

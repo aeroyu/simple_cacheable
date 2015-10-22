@@ -6,6 +6,7 @@ require "cacheable/types/association_cache"
 
 module Cacheable
   module Caches
+    include Cacheable::Utils
     include Cacheable::KeyCache
     include Cacheable::AttributeCache
     include Cacheable::MethodCache

@@ -1,10 +1,12 @@
 module Cacheable
   module AttributeCache
     def with_attribute(*attributes)
+      options = Utils::get_arguments_options(attributes)
+      Rails.logger.info(options)
       self.cached_indices ||= {}
       self.cached_indices = self.cached_indices.merge(attributes.each_with_object({}) {
-        |attribute, indices| indices[attribute.to_sym] = Set.new
-      })
+                                                          |attribute, indices| indices[attribute.to_sym] = Set.new
+                                                      })
 
       class_eval do
         after_commit :expire_attribute_cache, :on => :update
