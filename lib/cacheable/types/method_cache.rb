@@ -1,6 +1,8 @@
 module Cacheable
   module MethodCache
     def with_method(*methods)
+      @options = get_arguments_options(methods)
+
       self.cached_methods ||= []
       self.cached_methods += methods
 
@@ -14,7 +16,7 @@ module Cacheable
           iv = Cacheable.escape_punctuation("@#{method_name}")
           if instance_variable_get(iv).nil?
             instance_variable_set(iv,
-              (Cacheable.fetch method_cache_key(meth) do
+              (Cacheable.fetch method_cache_key(meth),@options do
                 send(meth)
               end)
             )

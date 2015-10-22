@@ -1,6 +1,8 @@
 module Cacheable
   module AssocationCache
     def with_association(*association_names)
+      @options = get_arguments_options(association_names)
+
       self.cached_associations ||= {}
       self.cached_associations = self.cached_associations.merge(association_names.each_with_object({}) {
         |meth, hash| hash[meth.to_sym] = {}
@@ -37,7 +39,7 @@ module Cacheable
 
           result = if cache_key
             association_cache.delete(association_name)
-            Cacheable.fetch(cache_key) do
+            Cacheable.fetch(cache_key,@options) do
               send(association_name)
             end
           else

@@ -1,6 +1,8 @@
 module Cacheable
   module KeyCache
-    def with_key
+    def with_key(args=[])
+      @options = get_arguments_options(args)
+
       self.cached_key = true
 
       class_eval do
@@ -9,7 +11,7 @@ module Cacheable
 
       define_singleton_method("find_cached") do |id|
         cache_key = self.instance_cache_key(id)
-        Cacheable.fetch(cache_key) do
+        Cacheable.fetch(cache_key,@options) do
           self.find(id)
         end
       end
