@@ -1,4 +1,5 @@
 require 'uri'
+require "cacheable/utils"
 require "cacheable/caches"
 require "cacheable/keys"
 require "cacheable/expiry"
