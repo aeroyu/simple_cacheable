@@ -7,7 +7,7 @@ module Cacheable
     end
 
     module ClassKeys
-      @@prefix_key
+      @@prefix_key=''
       def attribute_cache_key(attribute, value)
         modified_cache_key "#{cacheable_table_name}/attribute/#{attribute}/#{URI.escape(value.to_s)}"
       end
