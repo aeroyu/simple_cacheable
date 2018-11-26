@@ -8,6 +8,10 @@ module Cacheable
 
     module ClassKeys
       @@prefix_key=''
+      def self.set_prefix_key(prefix_key)
+        @@prefix_key = prefix_key
+      end
+
       def attribute_cache_key(attribute, value)
         modified_cache_key "#{cacheable_table_name}/attribute/#{attribute}/#{URI.escape(value.to_s)}"
       end
